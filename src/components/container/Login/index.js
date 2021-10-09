@@ -75,7 +75,10 @@ const Login = () => {
     };
 
     const handleLogin = () => {
-        alert('login')
+        if (validateInput() != true) setErrors(validateInput());
+        else {
+            alert('login')
+        }
     }
 
     const handleForgotPassword = () => {

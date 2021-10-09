@@ -46,16 +46,25 @@ const SignUp = () => {
         let isValid = true;
         let obj = {};
 
+        if (!name) {
+            isValid = false;
+            obj = {
+                ...obj,
+                name: 'Name is required',
+            }
+        }
         if (email) {
             if (!EMAIL_PATTERN.test(email)) {
                 isValid = false;
                 obj = {
+                    ...obj,
                     email: 'Email address is not in the correct format',
                 };
             }
         } else {
             isValid = false;
             obj = {
+                ...obj,
                 email: 'Email address is required',
             };
         }
@@ -114,7 +123,10 @@ const SignUp = () => {
     }
 
     const handleRegister = () => {
-        alert('handleRegister')
+        if (validateInput() != true) setErrors(validateInput());
+        else {
+            alert('handleRegister')
+        }
     }
 
     const navigateToLogin = () => {
