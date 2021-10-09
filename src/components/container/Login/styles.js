@@ -30,6 +30,19 @@ const styles = StyleSheet.create({
   mainText: {
     fontWeight: 'bold'
   },
+  heading: {
+    textAlign: 'left',
+    width: width * 0.85,
+    fontSize: 30,
+    fontWeight: 'bold',
+    marginTop: 30,
+  },
+  subHeading: {
+    textAlign: 'left',
+    width: width * 0.85,
+    fontSize: 16,
+    marginBottom: 30,
+  },
 });
 
 export default styles;
