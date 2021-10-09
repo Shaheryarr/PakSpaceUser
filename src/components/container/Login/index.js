@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { SafeAreaView, Text, View, TouchableOpacity, KeyboardAvoidingView, Platform, Keyboard, Dimensions, ScrollView } from 'react-native';
 import { EMAIL_PATTERN, isInternetConnected, themeStyleSheet } from '../../../constants';
-import { postLoginRequest, requestPassword } from '../../../SyncServices';
 import Button from '../../common/Buttons';
 import TextField from '../../common/TextField';
 import styles from './styles';
 import { useToast } from 'native-base';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../../../redux/actions';
+import { postLoginRequest } from '../../../SyncServices';
 
 const { width, height } = Dimensions.get('screen');
 
@@ -75,9 +75,47 @@ const Login = () => {
     };
 
     const handleLogin = () => {
+        Keyboard.dismiss();
+
         if (validateInput() != true) setErrors(validateInput());
         else {
-            alert('login')
+            isInternetConnected().then(() => {
+                let params = {
+                    email,
+                    password,
+                };
+
+                setLoading(true);
+
+                postLoginRequest(params).then(res => {
+                    const { name, image_url } = res;
+
+                    let userDetails = {
+                        name,
+                        email,
+                        image_url,
+                    };
+
+                    dispatch(setUser(userDetails)).then(() => {
+                        setLoading(false);
+
+                        navigation.reset({
+                            index: 0,
+                            routes: [{ name: 'appRoutes' }],
+                        });
+                    });
+                }).catch(err => {
+                    setLoading(false);
+                    
+                    Toast.show({
+                        title: err.response.data.message,
+                    });
+                })
+            }).catch(err => {
+                Toast.show({
+                    title: 'Please connect to the internet',
+                });
+            });
         }
     }
 
