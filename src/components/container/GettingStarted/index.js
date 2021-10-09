@@ -7,7 +7,7 @@ const GettingStarted = () => {
 
     return (
         <SafeAreaView>
-            <Text>This is a basic template</Text>
+            <Text>Getting Started</Text>
         </SafeAreaView>
     )
 }

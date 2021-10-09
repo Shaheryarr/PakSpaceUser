@@ -5,13 +5,13 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { themeStyleSheet } from '../constants';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import SplashScreen from '../components/SplashScreen';
-import NewsFeed from '../components/NewsFeed';
-import Issues from '../components/Issues';
-import Profile from '../components/Profile';
-import GettingStarted from '../components/GettingStarted';
-import Login from '../components/Login';
-import SignUp from '../components/SignUp';
+import SplashScreen from '../components/container/SplashScreen';
+import NewsFeed from '../components/container/NewsFeed';
+import Issues from '../components/container/Issues';
+import Profile from '../components/container/Profile';
+import GettingStarted from '../components/container/GettingStarted';
+import Login from '../components/container/Login';
+import SignUp from '../components/container/SignUp';
 
 const { height, width } = Dimensions.get('window');
 
