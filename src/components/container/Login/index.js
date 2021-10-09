@@ -1,14 +1,30 @@
 import React from 'react';
-import { SafeAreaView, Text } from 'react-native';
+import { SafeAreaView, Text, View, TouchableOpacity } from 'react-native';
 import styles from './styles';
 
 const Login = () => {
-    //Functions Here
+    
+    const handleForgotPassword = () => {
+        alert('handleForgotPassword')
+    }
 
     return (
-        <SafeAreaView>
-            <Text>This is a basic template</Text>
-        </SafeAreaView>
+        <>
+            <SafeAreaView style={styles.notchContainer} />
+            <SafeAreaView style={styles.mainContainer}>
+                <View style={styles.topContainer}>
+                    <Text>Login</Text>
+                </View>
+
+                <View style={styles.bottomContainer}>
+                    <TouchableOpacity onPress={handleForgotPassword}>
+                        <Text style={styles.subText}>
+                            Forgot your password? <Text style={styles.mainText}>Click Here</Text>
+                        </Text>
+                    </TouchableOpacity>
+                </View>
+            </SafeAreaView>
+        </>
     )
 }
 

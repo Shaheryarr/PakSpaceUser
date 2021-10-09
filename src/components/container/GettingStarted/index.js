@@ -3,7 +3,7 @@ import { SafeAreaView, Text, View, TouchableOpacity } from 'react-native';
 import styles from './styles';
 import Button from '../../common/Buttons';
 
-const GettingStarted = () => {
+const GettingStarted = ({ navigation }) => {
 
     const handleSignUp = () => {
         navigation.navigate('SignUp');
