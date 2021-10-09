@@ -11,6 +11,7 @@ import {
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useSelector } from 'react-redux';
 import { themeStyleSheet } from '../../../constants';
+import { getIssues } from '../../../SyncServices';
 import Buttons from '../../common/Buttons';
 import Issue from './Issue';
 // import { useDispatch, useSelector } from 'react-redux';
@@ -58,11 +59,14 @@ const Issues = ({ navigation }) => {
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        getIssues();
+        refreshData();
     }, [])
 
-    const getIssues = () => {
+    const refreshData = () => {
         setLoading(true);
+        getIssues().then(res => {
+            console.log(res);
+        })
         // get issues here
         setLoading(false);
     }
@@ -145,7 +149,7 @@ const Issues = ({ navigation }) => {
                         refreshControl={<RefreshControl
                             colors={["#9Bd35A", "#689F38"]}
                             refreshing={loading}
-                            onRefresh={getIssues} />}
+                            onRefresh={refreshData} />}
                         data={(issues).sort((a, b) => new Date(b.created_at) - new Date(a.created_at))}
                         renderItem={({ item, index }) => {
                             return (

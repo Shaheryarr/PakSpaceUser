@@ -92,7 +92,7 @@ const Login = ({ navigation }) => {
                     const { name, image_url, status, isActive, user_type } = res;
 
                     if (user_type == 'admin') {
-                        alert('An admin can not use admin application.')
+                        alert('An admin can not use user application.')
                     } else {
                         if (isActive == true) {
                             let userDetails = {

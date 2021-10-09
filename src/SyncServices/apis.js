@@ -16,6 +16,7 @@ export const MANAGE_ISSUE = BASE_URL + 'issue/';
 export const CHECK_AUTH_API = BASE_URL + 'register/check/auth/';
 export const LOGOUT_API = BASE_URL + ''
 // export const GET_POSTS = BASE_URL + 'view/posts/';
+export const VIEW_ISSUES = BASE_URL + 'view/issues/';
 // export const GET_QUIZ_PLAYERS = BASE_URL + 'games/users/quiz/';
 // export const GET_QUIZ_QUESTIONS = BASE_URL + 'games/answer/quiz/';
 // export const GET_QUIZ_LEADERBOARD = BASE_URL + 'games/leaderboard/';

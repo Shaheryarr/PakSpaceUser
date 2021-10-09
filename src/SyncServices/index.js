@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { LOGIN_API, UPLOAD_IMAGE_API, SIGNUP_API, MANAGE_POSTS, OTP_VERIFY_API, CHECK_AUTH_API, LOGOUT_API, RESEND_OTP_API } from './apis';
+import { LOGIN_API, UPLOAD_IMAGE_API, SIGNUP_API, MANAGE_POSTS, OTP_VERIFY_API, CHECK_AUTH_API, LOGOUT_API, RESEND_OTP_API, VIEW_ISSUES, MANAGE_ISSUE } from './apis';
 
 export const postLoginRequest = params => {
 	return new Promise((resolve, reject) => {
@@ -48,7 +48,7 @@ export const postImageBase64 = params => {
 export const createIssue = params => {
 	return new Promise((resolve, reject) => {
 		axios
-			.put(MANAGE_POSTS, params, {
+			.put(MANAGE_ISSUE, params, {
 				withCredentials: true,
 			})
 			.then(res => {
@@ -126,3 +126,20 @@ export const resendOtp = PARAMS => {
 			});
 	});
 };
+
+export const getIssues = () => {
+	return new Promise((resolve, reject) => {
+	  axios
+		.get(VIEW_ISSUES, {
+		  withCredentials: true,
+		})
+		.then(res => {
+		  console.log('getPosts res: ', res.data);
+		  resolve(res.data);
+		})
+		.catch(err => {
+		  console.log('getPosts err: ', err.response.data);
+		  reject(err);
+		});
+	});
+  };

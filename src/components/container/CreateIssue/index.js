@@ -8,6 +8,7 @@ import {
     View,
     Dimensions,
     Image,
+    Platform,
 } from 'react-native';
 import { useSelector } from 'react-redux';
 import CustomHeader from '../../common/CustomHeader';
@@ -17,6 +18,10 @@ import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import { createIssue, postImageBase64 } from '../../../SyncServices';
 import TextField from '../../common/TextField';
 import { themeStyleSheet } from '../../../constants';
+import Geolocation from '@react-native-community/geolocation';
+import { PERMISSIONS, request } from 'react-native-permissions';
+
+const { width } = Dimensions.get('screen')
 
 const CreateIssue = ({ navigation }) => {
 
@@ -75,33 +80,100 @@ const CreateIssue = ({ navigation }) => {
         setImage(false);
     };
 
-    const handleSave = () => {
-        if (image) {
+    const handleSave = (coords = {}) => {
+        if (images.length > 0) {
             let params = {
-                image_name: image.base64,
+                image_name: images[0].base64,
             };
-
+            console.log(params)
             setLoading(true);
 
             postImageBase64(params).then(res => {
                 const { message } = res;
 
-                handleCreatePost(message.image_url);
+                handleCreatePost([message.image_url], coords);
             });
         } else {
             setLoading(true);
 
-            handleCreatePost();
+            handleCreatePost([], coords);
         }
     };
 
-    const handleCreatePost = (url = '') => {
+    const getCoordinates = () => {
+        if (Platform.OS == 'ios') {
+            getIOSPermissions();
+        } else {
+            //android
+            // handleSave();
+        }
+    }
+
+    const getIOSPermissions = () => {
+        request(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE).then((result) => {
+            console.log(result)
+			if (result === 'granted') {
+				findCoordinates();
+			} else {
+                return;
+				handleSave();
+			}
+		});
+    }
+
+    const findCoordinates = () => {
+        Geolocation.getCurrentPosition(
+            position => {
+                console.log('POSITION', position);
+                const coords = {
+                    longitude: position.coords.longitude,
+                    lattitude: position.coords.latitude,
+                }
+                handleSave(coords)
+                // saveCoordinates(position).then(res => {
+                //     if (Object.keys(res).length) {
+                //         console.log('COORD', res);
+                //         // params.coordinates = res;
+                //         params = {
+                //             ...res,
+                //             params
+                //         }
+                //         setDukaanDetails(params);
+                //     } else {
+                //         setTimeout(() => {
+                //             setDukaanDetails(params);
+                //         }, 1000);
+                //     }
+                // });
+            },
+            error => {
+                console.log('Error Location access', JSON.stringify(error));
+                Toast.show({
+                    text: I18n.store_location_access_required,
+                });
+            },
+            {
+                enableHighAccuracy: false,
+                timeout: 20000,
+                // maximumAge: 1000,
+            },
+        );
+    }
+
+    const handleCreatePost = (url = [], coordinates = {}) => {
+
         let params2 = {
             title,
             landmark,
             content: text,
-            image_url: [url],
+            image_url: url,
+            lattitude: coordinates.lattitude,
+            longitude: coordinates.longitude,
+            status: 'Pending',
+            assign_to_id: ''
         };
+
+        console.log(params2);
 
         createIssue(params2).then(res => {
             setLoading(false);
@@ -131,7 +203,7 @@ const CreateIssue = ({ navigation }) => {
                     firstIcon={'chevron-left'}
                     onPressFirstIcon={handleBackAction}
                     save={text || image ? true : false}
-                    onPressThirdIcon={handleSave}
+                    onPressThirdIcon={getCoordinates}
                     title={'Create a Post'}
                 />
 
@@ -155,24 +227,32 @@ const CreateIssue = ({ navigation }) => {
                                 customWidth={'100%'}
                                 placeholderTextColor={themeStyleSheet.lightgray}
                             />
-                            <TextField
-                                label={'Landmark'}
-                                autoFocus
-                                placeholder={`E.g. Clifton, Shahr e Faisal, etc.`}
-                                maxLength={50}
-                                onChange={text => setLandmark(text)}
-                                customWidth={'100%'}
-                                placeholderTextColor={themeStyleSheet.lightgray}
-                            />
-                            <TextField
-                                label={'Description'}
-                                placeholder={`Write description here`}
-                                multiline
-                                placeholderTextColor={themeStyleSheet.lightgray}
-                                maxLength={500}
-                                onChange={text => setText(text)}
-                                customWidth={'100%'}
-                            />
+                            <View
+                                style={{
+                                    width: width,
+                                    alignSelf: 'center',
+                                    marginRight: 40
+                                    // alignItems: "center"
+                                }}
+                            >
+                                <TextField
+                                    label={'Landmark'}
+                                    placeholder={`E.g. Clifton, Shahr e Faisal, etc.`}
+                                    maxLength={50}
+                                    onChange={text => setLandmark(text)}
+                                    customWidth={'95%'}
+                                    placeholderTextColor={themeStyleSheet.lightgray}
+                                />
+                                <TextField
+                                    label={'Description'}
+                                    placeholder={`Write description here`}
+                                    multiline
+                                    placeholderTextColor={themeStyleSheet.lightgray}
+                                    maxLength={500}
+                                    onChange={text => setText(text)}
+                                    customWidth={'95%'}
+                                />
+                            </View>
 
                             {/* <TextInput
                                 autoFocus
