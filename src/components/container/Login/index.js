@@ -88,22 +88,32 @@ const Login = () => {
                 setLoading(true);
 
                 postLoginRequest(params).then(res => {
-                    const { name, image_url } = res;
+                    const { name, image_url, status, isActive, user_type } = res;
 
-                    let userDetails = {
-                        name,
-                        email,
-                        image_url,
-                    };
-
-                    dispatch(setUser(userDetails)).then(() => {
-                        setLoading(false);
-
-                        navigation.reset({
-                            index: 0,
-                            routes: [{ name: 'appRoutes' }],
-                        });
-                    });
+                    if (user_type == 'admin') {
+                        alert('An admin can not use admin application.')
+                    } else {
+                        if (isActive == true) {
+                            let userDetails = {
+                                name,
+                                email,
+                                image_url,
+                            };
+        
+                            dispatch(setUser(userDetails)).then(() => {
+                                setLoading(false);
+        
+                                navigation.reset({
+                                    index: 0,
+                                    routes: [{ name: 'appRoutes' }],
+                                });
+                            });
+                        } else {
+                            navigation.navigate('OtpVerification', {
+                                email,
+                            });
+                        }  
+                    }                  
                 }).catch(err => {
                     setLoading(false);
                     

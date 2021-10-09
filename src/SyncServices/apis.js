@@ -1,8 +1,8 @@
-export const BASE_URL = 'http://gov-tech-project.herokuapp.com/api/';
+export const BASE_URL = 'https://gov-tech-project.herokuapp.com/api/';
 
 export const LOGIN_API = BASE_URL + 'register/login/';
 export const SIGNUP_API = BASE_URL + 'register/signup/';
-// export const OTP_VERIFY_API = BASE_URL + 'register/verify/';
+export const OTP_VERIFY_API = BASE_URL + 'register/verify/';
 // export const CHANGE_PASSWORD_API = BASE_URL + 'register/change/password/';
 // export const RESET_PASSWORD_API = BASE_URL + 'register/forget/password/';
 // export const REQUEST_PASSWORD_API = BASE_URL + 'register/request/forget/password/';

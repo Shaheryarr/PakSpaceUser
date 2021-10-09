@@ -153,6 +153,31 @@ const SignUp = ({ navigation }) => {
         else {
             isInternetConnected().then(async () => {
                 const image_url = await handleImage();
+                const params = {
+					name,
+					email,
+					password,
+                    image_url,
+                    user_type: 'user'
+				}
+                postSignUpRequest(params).then(res => {
+					setLoading(false);
+
+					Toast.show({
+						title: 'We have sent a one time password to your email. Please verify',
+						duration: 5000
+					})
+
+					navigation.navigate('OtpVerification', {
+						email,
+					});
+				}).catch(err => {
+					setLoading(false);
+
+					Toast.show({
+						title: err.response.data.message
+					})
+				})
             }).catch(err => {
                 Toast.show({
                     title: 'Please connect to the internet',
@@ -171,7 +196,7 @@ const SignUp = ({ navigation }) => {
 
                 postImageBase64(params).then(res => {
                     console.log(res);
-                    resolve();
+                    resolve(res.message.image_url);
                 }).catch(err => {
                     reject(err)
                 })
