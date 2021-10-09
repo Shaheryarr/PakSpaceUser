@@ -1,4 +1,4 @@
-export const BASE_URL = 'https://farooqhidayat.pythonanywhere.com/api/';
+export const BASE_URL = 'http://gov-tech-project.herokuapp.com/api/';
 
 export const LOGIN_API = BASE_URL + 'register/login/';
 export const SIGNUP_API = BASE_URL + 'register/signup/';
@@ -10,7 +10,7 @@ export const SIGNUP_API = BASE_URL + 'register/signup/';
 // export const ADD_WORKSPACE = BASE_URL + 'register/create/workspace/';
 // export const ADD_MEMBERS = BASE_URL + 'register/add/members/';
 // export const UPDATE_USER = BASE_URL + 'register/update/user/';
-// export const UPLOAD_IMAGE_API = BASE_URL + 'core/image_upload/';
+export const UPLOAD_IMAGE_API = BASE_URL + 'core/image_upload/';
 // export const MANAGE_POSTS = BASE_URL + 'post/';
 // export const CHECK_AUTH_API = BASE_URL + 'register/check/auth/';
 // export const GET_POSTS = BASE_URL + 'view/posts/';

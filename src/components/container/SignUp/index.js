@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { SafeAreaView, Text, View, TouchableOpacity, KeyboardAvoidingView, Platform, Keyboard, Dimensions, ScrollView } from 'react-native';
+import { SafeAreaView, Text, View, TouchableOpacity, KeyboardAvoidingView, Platform, Keyboard, Dimensions, ScrollView, Image } from 'react-native';
 import { EMAIL_PATTERN, isInternetConnected, themeStyleSheet } from '../../../constants';
-import { postLoginRequest, requestPassword } from '../../../SyncServices';
+import { postImageBase64 } from '../../../SyncServices';
 import Button from '../../common/Buttons';
 import TextField from '../../common/TextField';
 import styles from './styles';
@@ -9,16 +9,23 @@ import { useToast, Avatar } from 'native-base';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../../../redux/actions';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 
 const { width, height } = Dimensions.get('screen');
 
-const SignUp = () => {
+const config = {
+    mediaType: 'photo',
+    includeBase64: true,
+    quality: 0.1,
+};
+
+const SignUp = ({ navigation }) => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [rePassword, setRePassword] = useState('');
     const [name, setName] = useState('');
-    const [image, setImage] = useState(false);
+    const [image, setImage] = useState(undefined);
     const [errors, setErrors] = useState({});
     const [loading, setLoading] = useState(false);
 
@@ -101,7 +108,7 @@ const SignUp = () => {
             isValid = false;
             obj = {
                 ...obj,
-                rePassword: 'Name is required',
+                name: 'Name is required',
             };
         }
 
@@ -109,16 +116,62 @@ const SignUp = () => {
         else return obj;
     };
 
-    const handleImage = () => {
-        alert('handleImage')
-    }
+    const takePhotoFromCamera = () => {
+        launchCamera(config, res => {
+            const { assets } = res;
+
+            if (assets?.length) {
+                setImage(assets[0]);
+            }
+        });
+    };
+
+    const choosePhotoFromLibrary = () => {
+        launchImageLibrary(config, res => {
+            const { assets } = res;
+
+            if (assets?.length) {
+                setImage(assets[0]);
+                console.log(assets[0]);
+            }
+        });
+    };
 
     const handleRegister = () => {
-        alert('handleRegister')
+        Keyboard.dismiss();
+
+        if (validateInput() != true) setErrors(validateInput());
+        else {
+            isInternetConnected().then(async () => {
+                const image_url = await handleImage();
+            }).catch(err => {
+                Toast.show({
+                    title: 'Please connect to the internet',
+                });
+            });
+        }
+    }
+
+    const handleImage = () => {
+        return new Promise((resolve, reject) => {
+            if (!image) resolve();
+            else {
+                let params = {
+                    image_name: image.base64,
+                };
+
+                postImageBase64(params).then(res => {
+                    console.log(res);
+                    resolve();
+                }).catch(err => {
+                    reject(err)
+                })
+            }
+        })
     }
 
     const navigateToLogin = () => {
-        alert('navigateToLogin')
+        navigation.navigate('Login')
     }
 
     return (
@@ -132,12 +185,14 @@ const SignUp = () => {
                             <Text style={{ ...styles.subHeading, color: themeStyleSheet.darkGray }}>Please register yourself</Text>
 
                             <ScrollView keyboardShouldPersistTaps='handled' showsVerticalScrollIndicator={false}>
-                                <TouchableOpacity style={{height: height * 0.18, justifyContent: 'center', alignItems: 'center', marginBottom: 10}} onPress={handleImage}>
-                                    <Avatar bg={themeStyleSheet.lightgray} size='32' source={image ? {uri: image} : require('../../../assets/user.png')} />
-                                    
-                                    <View style={{position: 'absolute', bottom: 10, right: 120, borderWidth: 1, width: 35, height: 35, borderRadius: 35/2, borderColor: themeStyleSheet.extraLightGray, backgroundColor: themeStyleSheet.white, justifyContent: 'center', alignItems: 'center'}}>
-                                        <Icon name={'pencil'} size={20} />
+                                <TouchableOpacity style={{ height: height * 0.18, justifyContent: 'center', alignItems: 'center', marginBottom: 10 }} onPress={choosePhotoFromLibrary}>
+                                    <View style={{ backgroundColor: themeStyleSheet.lightgray, height: 120, width: 120, borderRadius: 60, justifyContent: 'center', alignItems: 'center', overflow: 'hidden' }}>
+                                        <Image source={image ? { uri: image.uri } : require('../../../assets/user.png')} style={{ height: '100%', width: '100%' }} resizeMode='contain' />
                                     </View>
+
+                                    <TouchableOpacity style={{ position: 'absolute', bottom: 10, right: 120, borderWidth: 1, width: 35, height: 35, borderRadius: 35 / 2, borderColor: themeStyleSheet.extraLightGray, backgroundColor: themeStyleSheet.white, justifyContent: 'center', alignItems: 'center' }} onPress={choosePhotoFromLibrary}>
+                                        <Icon name={'pencil'} size={20} />
+                                    </TouchableOpacity>
                                 </TouchableOpacity>
                                 <TextField
                                     placeholder="Enter Full Name"
