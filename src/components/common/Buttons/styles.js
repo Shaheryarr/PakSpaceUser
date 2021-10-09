@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   containerSecondary: {
-    height: height * 0.07,
+    height: height * 0.05,
     paddingHorizontal: 25,
     width: width * 0.8,
     backgroundColor: themeStyleSheet.secondaryColor,
@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     elevation: 1,
   },
   containerRed: {
-    height: height * 0.07,
+    height: height * 0.05,
     paddingHorizontal: 25,
     width: width * 0.8,
     backgroundColor: themeStyleSheet.red,
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     color: themeStyleSheet.white,
   },
   containerPrimary: {
-    height: height * 0.07,
+    height: height * 0.05,
     paddingHorizontal: 25,
     width: width * 0.8,
     backgroundColor: themeStyleSheet.mainColor,
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     elevation: 1,
   },
   containerPrimaryDisabled: {
-    height: height * 0.07,
+    height: height * 0.05,
     paddingHorizontal: 25,
     width: width * 0.8,
     backgroundColor: themeStyleSheet.white,
