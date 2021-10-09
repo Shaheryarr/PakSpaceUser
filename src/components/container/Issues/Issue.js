@@ -89,7 +89,7 @@ const Issue = ({ item }) => {
                                         }}
                                     >
                                         <Icon
-                                            onPress={item.location?.length > 0 ? () => setShowMap(true) : () => alert('Pin location not available')}
+                                            onPress={item.longitude && item.latitude ? () => setShowMap(true) : () => alert('Pin location not available')}
                                             name='location'
                                             size={27}
                                             color={themeStyleSheet.mainColor}
@@ -130,7 +130,7 @@ const Issue = ({ item }) => {
                                 size={20}
                                 color={themeStyleSheet.mainColor}
                             />
-                            <Text>{item.votes}</Text>
+                            <Text>{item.votes.length}</Text>
                         </View>
                     </View>
                     <View style={styles.likeCommentContainer}>
@@ -163,33 +163,35 @@ const Issue = ({ item }) => {
                     ></Image>
                 </View>
             </Modal>
-            <Modal
-                isVisible={showMap}
-                style={{ margin: 0 }}
-                onBackdropPress={() => setShowMap(false)}
-                onBackButtonPress={() => setShowMap(false)}
-                useNativeDriver
-            >
-                <View style={styles.container}>
-                    <MapView
-                        provider={PROVIDER_GOOGLE} // remove if not using Google Maps
-                        style={{ ...StyleSheet.absoluteFillObject }}
-                        region={{
-                            latitude: item.location[0],
-                            longitude: item.location[1],
-                            latitudeDelta: 0.015,
-                            longitudeDelta: 0.0121,
-                        }}
-                    >
-                        <Marker
-                            //   key={index}
-                            coordinate={{ latitude: item.location[0], longitude: item.location[1] }}
-                            title={item.landmark}
-                            description={item.content}
-                        />
-                    </MapView>
-                </View>
-            </Modal>
+            {item.latitude && item.longitude ? (
+                <Modal
+                    isVisible={showMap}
+                    style={{ margin: 0 }}
+                    onBackdropPress={() => setShowMap(false)}
+                    onBackButtonPress={() => setShowMap(false)}
+                    useNativeDriver
+                >
+                    <View style={styles.container}>
+                        <MapView
+                            provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+                            style={{ ...StyleSheet.absoluteFillObject }}
+                            region={{
+                                latitude: item.latitude,
+                                longitude: item.longitude,
+                                latitudeDelta: 0.015,
+                                longitudeDelta: 0.0121,
+                            }}
+                        >
+                            <Marker
+                                //   key={index}
+                                coordinate={{ latitude: item.latitude, longitude: item.longitude }}
+                                title={item.landmark}
+                                description={item.content}
+                            />
+                        </MapView>
+                    </View>
+                </Modal>
+            ) : null}
         </>
     )
 }

@@ -38,7 +38,8 @@ const styles = StyleSheet.create({
 	},
 	profileText: {
 		color: themeStyleSheet.white,
-		fontSize: 16
+		fontSize: 24,
+		fontWeight: 'bold'
 	},
 	notchContainer: {
 		flex: 0,

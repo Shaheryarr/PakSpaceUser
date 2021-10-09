@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { SafeAreaView, Text, View, TouchableOpacity, KeyboardAvoidingView, Platform, Keyboard, Dimensions, ScrollView, Image } from 'react-native';
 import { EMAIL_PATTERN, isInternetConnected, themeStyleSheet } from '../../../constants';
-import { postImageBase64 } from '../../../SyncServices';
+import { postImageBase64, postSignUpRequest } from '../../../SyncServices';
 import Button from '../../common/Buttons';
 import TextField from '../../common/TextField';
 import styles from './styles';

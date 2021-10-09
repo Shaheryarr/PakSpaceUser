@@ -33,8 +33,9 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     position: 'absolute',
-    bottom: -30,
-    alignSelf: 'center'
+    bottom: -15,
+    alignSelf: 'center',
+    zIndex: 999
   },
   carouselContainer: {
     flex: 1,

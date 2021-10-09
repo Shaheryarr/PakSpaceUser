@@ -51,7 +51,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     flexDirection: 'row',
     alignItems: 'center',
-    bottom: 25,
     borderTopWidth: 0.5,
     borderColor: themeStyleSheet.lightgray
     // position: 'absolute'
@@ -84,18 +83,18 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   image: {
-    width: width,
-    height: height * 0.7
+    width: width * 0.2,
+    height: width * 0.2,
+    margin: 5,
   },
   editImageContainer: {
     position: 'absolute',
-    top: 15,
-    right: 15
+    left: width * 0.18,
   },
   editImage: {
     backgroundColor: themeStyleSheet.secondaryColor,
-    height: 40,
-    width: 40,
+    height: 20,
+    width: 20,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 5

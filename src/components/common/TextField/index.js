@@ -20,7 +20,8 @@ const TextField = ({
 	keyboardType,
 	customWidth,
 	multiline,
-	ref
+	ref,
+	maxLength
 }) => {
 	const [visible, setVisible] = useState(!secureTextEntry);
 
@@ -56,6 +57,7 @@ const TextField = ({
 							autoCapitalize={'none'}
 							multiline={multiline}
 							ref={ref}
+							maxLength={maxLength}
 						/>
 					</View>
 					{textContentType == 'password' && (

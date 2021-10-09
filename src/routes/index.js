@@ -12,6 +12,8 @@ import Profile from '../components/container/Profile';
 import GettingStarted from '../components/container/GettingStarted';
 import Login from '../components/container/Login';
 import SignUp from '../components/container/SignUp';
+import OtpVerification from '../components/container/OtpVerification';
+import CreateIssue from '../components/container/CreateIssue';
 
 const { height, width } = Dimensions.get('window');
 
@@ -61,6 +63,7 @@ const appRoutes = () => {
     return (
         <Stack.Navigator initialRouteName={'Tabs'} screenOptions={{ headerShown: false }}>
             <Stack.Screen name="Tabs" component={Tabs} />
+            <Stack.Screen name="CreateIssue" component={CreateIssue} />
         </Stack.Navigator>
     );
 };
@@ -73,6 +76,7 @@ const rootRoutes = () => {
                 <Stack.Screen name="GettingStarted" component={GettingStarted} />
                 <Stack.Screen name="Login" component={Login} />
                 <Stack.Screen name="SignUp" component={SignUp} />
+                <Stack.Screen name="OtpVerification" component={OtpVerification} />
                 <Stack.Screen name="appRoutes" component={appRoutes} />
             </Stack.Navigator>
         </NavigationContainer>

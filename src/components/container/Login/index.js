@@ -11,7 +11,7 @@ import { postLoginRequest } from '../../../SyncServices';
 
 const { width, height } = Dimensions.get('screen');
 
-const Login = () => {
+const Login = ({ navigation }) => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -85,6 +85,7 @@ const Login = () => {
                     password,
                 };
 
+                console.log(params);
                 setLoading(true);
 
                 postLoginRequest(params).then(res => {

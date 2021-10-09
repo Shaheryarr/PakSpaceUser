@@ -66,9 +66,10 @@ const OtpVerification = ({ navigation, route }) => {
                     dispatch(setUser(userDetails)).then(() => {
                         setLoading(false)
                         console.log('route params', params);
-                            // navigation.navigate('SelectWorkspace', {
-                            //     workspaces: []
-                            // })
+                        navigation.reset({
+                            index: 0,
+                            routes: [{ name: 'appRoutes' }],
+                        });
                     })
                 }).catch(err => {
                     setLoading(false)

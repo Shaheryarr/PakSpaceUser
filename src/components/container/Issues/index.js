@@ -9,6 +9,7 @@ import {
     View,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { useSelector } from 'react-redux';
 import { themeStyleSheet } from '../../../constants';
 import Buttons from '../../common/Buttons';
 import Issue from './Issue';
@@ -21,6 +22,8 @@ import styles from './styles';
 
 const Issues = ({ navigation }) => {
 
+    const user = useSelector(state => state.user);
+
     const issues = [
         {
             id: 1,
@@ -28,11 +31,12 @@ const Issues = ({ navigation }) => {
             title: 'Jauhar Chorangi',
             content: `The road from Jauhar Chorangi to Kamran Chaurangi is broken and needs to be looked at !`,
             created_by: 'Hasan',
-            votes: 20,
+            votes: ['1', 2, 3, 13, 13, 13],
             assigned_to: '',
             status: 'Pending',
             created_at: 1633770171919,
-            location: [24.912266, 67.125673],
+            latitude: 24.912266,
+            longitude: 67.125673,
             landmark: 'Jauhar'
         },
         {
@@ -40,12 +44,13 @@ const Issues = ({ navigation }) => {
             images: ['https://i5.paktive.com/f/1436646577_9b13011f77_m.jpg', 'https://media.zameen.com/thumbnails/7175081-400x300.jpeg'],
             title: 'Traffic Light not working',
             content: `The traffic light at disco bakery does not work`,
-            created_by: 'Hasan',
-            votes: 20,
+            created_by: 'Shaheryar',
+            votes: ['1', 2],
             assigned_to: 'FixIt',
             status: 'Accepted',
             created_at: 1612760171919,
-            location: [],
+            longitude: '',
+            latitude: '',
             landmark: 'Gulshan'
         }
     ]
@@ -62,6 +67,14 @@ const Issues = ({ navigation }) => {
         setLoading(false);
     }
 
+    const handleProfile = () => {
+        navigation.navigate('Profile')
+    }
+
+    const handleCreateIssue = () => {
+        navigation.navigate('CreateIssue')
+    }
+
     return (
         <>
             <SafeAreaView style={styles.notchContainer} />
@@ -71,14 +84,14 @@ const Issues = ({ navigation }) => {
 
                     <TouchableOpacity
                         style={styles.profileContainer}
-                    // onPress={handleProfile}
+                        onPress={handleProfile}
                     >
                         <Text style={styles.profileText}>
-                            {'H'}
+                            {user.name ? user?.name?.substring(0, 1).toUpperCase() : user.email?.substring(0, 1).toUpperCase()}
                         </Text>
                     </TouchableOpacity>
                 </View>
-                
+
                 <View
                     style={{
                         backgroundColor: themeStyleSheet.white,
@@ -159,8 +172,8 @@ const Issues = ({ navigation }) => {
                 <View style={styles.fabContainer}>
                     <Buttons
                         type="primary"
-                        title={'Add a issue'}
-                        // onPress={handleCreatePost}
+                        title={'Add an issue'}
+                        onPress={handleCreateIssue}
                     />
                 </View>
             </SafeAreaView>
