@@ -131,7 +131,7 @@ const SignUp = () => {
                             <Text style={{ ...styles.heading, color: themeStyleSheet.darkGray }}>Welcome to PakSpace</Text>
                             <Text style={{ ...styles.subHeading, color: themeStyleSheet.darkGray }}>Please register yourself</Text>
 
-                            <ScrollView keyboardShouldPersistTaps='handled'>
+                            <ScrollView keyboardShouldPersistTaps='handled' showsVerticalScrollIndicator={false}>
                                 <TouchableOpacity style={{height: height * 0.18, justifyContent: 'center', alignItems: 'center', marginBottom: 10}} onPress={handleImage}>
                                     <Avatar bg={themeStyleSheet.lightgray} size='32' source={image ? {uri: image} : require('../../../assets/user.png')} />
                                     
