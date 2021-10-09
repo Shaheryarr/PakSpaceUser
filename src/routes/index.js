@@ -9,6 +9,9 @@ import SplashScreen from '../components/SplashScreen';
 import NewsFeed from '../components/NewsFeed';
 import Issues from '../components/Issues';
 import Profile from '../components/Profile';
+import GettingStarted from '../components/GettingStarted';
+import Login from '../components/Login';
+import SignUp from '../components/SignUp';
 
 const { height, width } = Dimensions.get('window');
 
@@ -58,12 +61,6 @@ const appRoutes = () => {
     return (
         <Stack.Navigator initialRouteName={'Tabs'} screenOptions={{ headerShown: false }}>
             <Stack.Screen name="Tabs" component={Tabs} />
-            {/* <Stack.Screen name="CreatePost" component={CreatePost} />
-            <Stack.Screen name="QuizDashboard" component={QuizDashboard} />
-            <Stack.Screen name="QuizChooseUser" component={QuizChooseUser} />
-            <Stack.Screen name="QuizMain" component={QuizMain} />
-            <Stack.Screen name="PostDetail" component={PostDetail} />
-            <Stack.Screen name="QuizSetQuestions" component={QuizSetQuestions} /> */}
         </Stack.Navigator>
     );
 };
@@ -73,9 +70,9 @@ const rootRoutes = () => {
         <NavigationContainer>
             <Stack.Navigator initialRouteName={'SplashScreen'} screenOptions={{ headerShown: false }}>
                 <Stack.Screen name="SplashScreen" component={SplashScreen} />
-                {/* <Stack.Screen name="GettingStarted" component={GettingStarted} />
+                <Stack.Screen name="GettingStarted" component={GettingStarted} />
                 <Stack.Screen name="Login" component={Login} />
-                <Stack.Screen name="Signup" component={Signup} /> */}
+                <Stack.Screen name="SignUp" component={SignUp} />
                 <Stack.Screen name="appRoutes" component={appRoutes} />
             </Stack.Navigator>
         </NavigationContainer>
