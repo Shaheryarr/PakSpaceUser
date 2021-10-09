@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { LOGIN_API, UPLOAD_IMAGE_API, SIGNUP_API } from './apis';
+import { LOGIN_API, UPLOAD_IMAGE_API, SIGNUP_API, MANAGE_POSTS } from './apis';
 
 export const postLoginRequest = params => {
     return new Promise((resolve, reject) => {
@@ -42,3 +42,20 @@ export const postImageBase64 = params => {
         });
     });
 };
+
+export const createIssue = params => {
+    return new Promise((resolve, reject) => {
+      axios
+        .put(MANAGE_POSTS, params, {
+          withCredentials: true,
+        })
+        .then(res => {
+          console.log('createPost res: ', res.data);
+          resolve(res.data);
+        })
+        .catch(err => {
+          console.log('createPost err: ', err.response.data);
+          reject(err);
+        });
+    });
+  };
