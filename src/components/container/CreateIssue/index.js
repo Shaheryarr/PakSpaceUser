@@ -82,8 +82,13 @@ const CreateIssue = ({ navigation }) => {
 
     const handleSave = (coords = {}) => {
         if (images.length > 0) {
+            const img_arr = images.map(x => {
+                return x.base64
+            })
+
             let params = {
-                image_name: images[0].base64,
+                multiple: true,
+                image_name: img_arr,
             };
             console.log(params)
             setLoading(true);
@@ -91,7 +96,7 @@ const CreateIssue = ({ navigation }) => {
             postImageBase64(params).then(res => {
                 const { message } = res;
 
-                handleCreatePost([message.image_url], coords);
+                handleCreatePost(message.image_url, coords);
             });
         } else {
             setLoading(true);
@@ -130,21 +135,6 @@ const CreateIssue = ({ navigation }) => {
                     lattitude: position.coords.latitude,
                 }
                 handleSave(coords)
-                // saveCoordinates(position).then(res => {
-                //     if (Object.keys(res).length) {
-                //         console.log('COORD', res);
-                //         // params.coordinates = res;
-                //         params = {
-                //             ...res,
-                //             params
-                //         }
-                //         setDukaanDetails(params);
-                //     } else {
-                //         setTimeout(() => {
-                //             setDukaanDetails(params);
-                //         }, 1000);
-                //     }
-                // });
             },
             error => {
                 console.log('Error Location access', JSON.stringify(error));
@@ -175,7 +165,7 @@ const CreateIssue = ({ navigation }) => {
 
 
         console.log(params2);
-        
+
         createIssue(params2).then(res => {
             setLoading(false);
             navigation.reset({

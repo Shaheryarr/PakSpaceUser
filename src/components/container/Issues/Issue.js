@@ -25,10 +25,6 @@ const Issue = ({ item }) => {
     const [img, setImg] = useState('');
     const [showMap, setShowMap] = useState(false);
 
-    const acceptIssue = () => {
-        alert('good')
-    }
-
     const toggleImg = () => {
         setShowImg(prev => !prev);
     }
@@ -37,9 +33,9 @@ const Issue = ({ item }) => {
         return (
             <TouchableOpacity onPress={() => {
                 toggleImg()
-                setImg(item)
+                setImg(item.image_url)
             }} style={styles.carouselItem}>
-                <Image source={{ uri: item }} resizeMode={'contain'} style={{ width: 400, height: 300 }} />
+                <Image source={{ uri: item.image_url }} resizeMode={'contain'} style={{ width: 400, height: 300 }} />
             </TouchableOpacity>
         );
     };
@@ -135,13 +131,9 @@ const Issue = ({ item }) => {
                     </View>
                     <View style={styles.likeCommentContainer}>
                         {item.status == 'Pending' ? (
-                            <Buttons
-                                onPress={acceptIssue}
-                                type={'primary'}
-                                title={'Accept'}
-                            />
+                            <Text>{`Pending`}</Text>
                         ) : (
-                            <Text>{`Assigned to ${item.assigned_to}`}</Text>
+                            <Text>{`Assigned to ${item.assigned_to_name}`}</Text>
                         )}
                     </View>
                 </View>
