@@ -45,14 +45,14 @@ const screenOptions = (route, color) => {
 
 const Tabs = () => {
     return (
-        <Tab.Navigator initialRouteName={'NewsFeed'} screenOptions={({ route }) => ({
+        <Tab.Navigator initialRouteName={'Issues'} screenOptions={({ route }) => ({
             headerShown: false,
             tabBarIcon: ({ color }) => screenOptions(route, color),
             tabBarActiveTintColor: themeStyleSheet.mainColor,
             tabBarShowLabel: false,
             tabBarStyle: Platform.OS == 'ios' ? { height: height * 0.1 } : { height: height * 0.08 },
         })}>
-            <Tab.Screen name="NewsFeed" component={NewsFeed} />
+            {/* <Tab.Screen name="NewsFeed" component={NewsFeed} /> */}
             <Tab.Screen name="Issues" component={Issues} />
             <Tab.Screen name="Profile" component={Profile} />
         </Tab.Navigator>
