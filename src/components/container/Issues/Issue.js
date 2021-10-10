@@ -130,7 +130,7 @@ const Issue = ({ item }) => {
                         </View>
                     </View>
                     <View style={styles.likeCommentContainer}>
-                        {item.status == 'Pending' ? (
+                        {item.status == 'Pending' || item.status == 'PENDING' ? (
                             <Text>{`Pending`}</Text>
                         ) : (
                             <Text>{`Assigned to ${item.assigned_to_name}`}</Text>

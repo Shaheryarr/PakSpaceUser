@@ -21,6 +21,8 @@ import Issue from './Issue';
 // import Post from './Post';
 import styles from './styles';
 
+let socket = new WebSocket('ws://gov-tech-project.herokuapp.com/ws/issue/');
+
 const Issues = ({ navigation }) => {
 
     const user = useSelector(state => state.user);
@@ -60,6 +62,17 @@ const Issues = ({ navigation }) => {
 
     useEffect(() => {
         refreshData();
+        socket.onopen = () => {
+            // connection opened
+            socket.send('something'); // send a message
+        };
+        socket.onmessage = (e) => {
+            // a message was received
+            console.log('e.data', e.data);
+        };
+        // return () => {
+        //     socket.onclose();
+        // }
     }, [])
 
     const refreshData = () => {
