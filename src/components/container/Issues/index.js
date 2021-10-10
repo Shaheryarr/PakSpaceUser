@@ -24,37 +24,37 @@ import styles from './styles';
 const Issues = ({ navigation }) => {
 
     const user = useSelector(state => state.user);
-
-    const issues = [
-        {
-            id: 1,
-            images: ['https://habib.edu.pk/ethnographylab/wp-content/uploads/2017/10/1-7.jpg',],
-            title: 'Jauhar Chorangi',
-            content: `The road from Jauhar Chorangi to Kamran Chaurangi is broken and needs to be looked at !`,
-            created_by: 'Hasan',
-            votes: ['1', 2, 3, 13, 13, 13],
-            assigned_to: '',
-            status: 'Pending',
-            created_at: 1633770171919,
-            latitude: 24.912266,
-            longitude: 67.125673,
-            landmark: 'Jauhar'
-        },
-        {
-            id: 2,
-            images: ['https://i5.paktive.com/f/1436646577_9b13011f77_m.jpg', 'https://media.zameen.com/thumbnails/7175081-400x300.jpeg'],
-            title: 'Traffic Light not working',
-            content: `The traffic light at disco bakery does not work`,
-            created_by: 'Shaheryar',
-            votes: ['1', 2],
-            assigned_to: 'FixIt',
-            status: 'Accepted',
-            created_at: 1612760171919,
-            longitude: '',
-            latitude: '',
-            landmark: 'Gulshan'
-        }
-    ]
+    const [issues, setIssues] = useState([]);
+    // const issues = [
+    //     {
+    //         id: 1,
+    //         images: ['https://habib.edu.pk/ethnographylab/wp-content/uploads/2017/10/1-7.jpg',],
+    //         title: 'Jauhar Chorangi',
+    //         content: `The road from Jauhar Chorangi to Kamran Chaurangi is broken and needs to be looked at !`,
+    //         created_by: 'Hasan',
+    //         votes: ['1', 2, 3, 13, 13, 13],
+    //         assigned_to: '',
+    //         status: 'Pending',
+    //         created_at: 1633770171919,
+    //         latitude: 24.912266,
+    //         longitude: 67.125673,
+    //         landmark: 'Jauhar'
+    //     },
+    //     {
+    //         id: 2,
+    //         images: ['https://i5.paktive.com/f/1436646577_9b13011f77_m.jpg', 'https://media.zameen.com/thumbnails/7175081-400x300.jpeg'],
+    //         title: 'Traffic Light not working',
+    //         content: `The traffic light at disco bakery does not work`,
+    //         created_by: 'Shaheryar',
+    //         votes: ['1', 2],
+    //         assigned_to: 'FixIt',
+    //         status: 'Accepted',
+    //         created_at: 1612760171919,
+    //         longitude: '',
+    //         latitude: '',
+    //         landmark: 'Gulshan'
+    //     }
+    // ]
 
     const [loading, setLoading] = useState(false);
 
@@ -65,10 +65,11 @@ const Issues = ({ navigation }) => {
     const refreshData = () => {
         setLoading(true);
         getIssues().then(res => {
+            setLoading(false);
+            setIssues(res.results);
             console.log(res);
         })
         // get issues here
-        setLoading(false);
     }
 
     const handleProfile = () => {
@@ -152,6 +153,7 @@ const Issues = ({ navigation }) => {
                             onRefresh={refreshData} />}
                         data={(issues).sort((a, b) => new Date(b.created_at) - new Date(a.created_at))}
                         renderItem={({ item, index }) => {
+                            console.log(item.issue_images);
                             return (
                                 <Issue
                                     item={item}

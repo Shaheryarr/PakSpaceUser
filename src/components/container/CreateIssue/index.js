@@ -173,8 +173,9 @@ const CreateIssue = ({ navigation }) => {
             assign_to_id: ''
         };
 
-        console.log(params2);
 
+        console.log(params2);
+        
         createIssue(params2).then(res => {
             setLoading(false);
             navigation.reset({

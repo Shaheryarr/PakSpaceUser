@@ -89,7 +89,7 @@ const Issue = ({ item }) => {
                                         }}
                                     >
                                         <Icon
-                                            onPress={item.longitude && item.latitude ? () => setShowMap(true) : () => alert('Pin location not available')}
+                                            onPress={item.longitude && item.lattitude ? () => setShowMap(true) : () => alert('Pin location not available')}
                                             name='location'
                                             size={27}
                                             color={themeStyleSheet.mainColor}
@@ -111,10 +111,10 @@ const Issue = ({ item }) => {
                         >{item.title}</Text>
                     </View>
                     <Text style={styles.contentContainer}>{item.content}</Text>
-                    {item.images.length > 0 ? (
+                    {item.issue_images.length > 0 ? (
                         <View style={styles.carouselContainer}>
                             <Carousel
-                                data={item.images}
+                                data={item.issue_images}
                                 renderItem={renderItem}
                                 sliderWidth={width}
                                 itemWidth={ITEM_WIDTH}
@@ -130,7 +130,7 @@ const Issue = ({ item }) => {
                                 size={20}
                                 color={themeStyleSheet.mainColor}
                             />
-                            <Text>{item.votes.length}</Text>
+                            <Text>{item.liked_by.length}</Text>
                         </View>
                     </View>
                     <View style={styles.likeCommentContainer}>
@@ -163,7 +163,7 @@ const Issue = ({ item }) => {
                     ></Image>
                 </View>
             </Modal>
-            {item.latitude && item.longitude ? (
+            {item.lattitude && item.longitude ? (
                 <Modal
                     isVisible={showMap}
                     style={{ margin: 0 }}
@@ -176,15 +176,15 @@ const Issue = ({ item }) => {
                             provider={PROVIDER_GOOGLE} // remove if not using Google Maps
                             style={{ ...StyleSheet.absoluteFillObject }}
                             region={{
-                                latitude: item.latitude,
-                                longitude: item.longitude,
+                                latitude: parseFloat(item.lattitude),
+                                longitude: parseFloat(item.longitude),
                                 latitudeDelta: 0.015,
                                 longitudeDelta: 0.0121,
                             }}
                         >
                             <Marker
                                 //   key={index}
-                                coordinate={{ latitude: item.latitude, longitude: item.longitude }}
+                                coordinate={{ latitude: parseFloat(item.lattitude), longitude: parseFloat(item.longitude) }}
                                 title={item.landmark}
                                 description={item.content}
                             />
